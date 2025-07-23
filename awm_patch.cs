@@ -38,12 +38,8 @@ public class AWM_Patch
                 }
                 else
                 {
-                    PID.Text = "⚠️ Multiple or no AWM values found.";
+                    PID.Text = "❌ AWM Value Not Found or Too Many Results.";
                 }
-            }
-            else
-            {
-                PID.Text = "❌ Scan failed. Result invalid.";
             }
         }
         catch (Exception ex)
