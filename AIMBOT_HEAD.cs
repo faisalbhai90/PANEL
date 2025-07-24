@@ -16,7 +16,7 @@ public class AIMBOT_HEAD
     private static Dictionary<long, int> OrginalValues3 = new Dictionary<long, int>();
     private static Dictionary<long, int> OrginalValues4 = new Dictionary<long, int>();
 
-    public static async Task Run(dynamic FAHIM, dynamic PID, bool isMuted = false)
+    public static async Task Run(dynamic PLAYBOX, dynamic PID, bool isMuted = false)
     {
         OrginalValues1.Clear();
         OrginalValues2.Clear();
