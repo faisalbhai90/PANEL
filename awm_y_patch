@@ -27,7 +27,7 @@ public class AWM_Y_Patch
         bool success = false;
         S1K.OpenProcess("HD-Player");
 
-        IEnumerable<long> results = await S1K.AoBScan(search); // ❌ writable: true বাদ দিলাম
+        IEnumerable<long> results = await S1K.AoBScan(search); // ✅ Writable বাদ দেওয়া হয়েছে
         string[] replaceParts = replace.Split(' ');
 
         if (results.Any())
