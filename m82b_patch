@@ -1,1 +1,54 @@
-gykj bl;jnjkl
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+public class M82B_Patch
+{
+    public static async Task Run(dynamic mem, dynamic PID)
+    {
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        PID.Text = "ᴀᴘᴘʟʏɪɴɢ M82B ꜰᴀꜱᴛ ꜱᴡɪᴛᴄʜ";
+
+        try
+        {
+            int procId = Process.GetProcessesByName("HD-Player")[0].Id;
+            mem.OpenProcess(procId);
+
+            string searchPattern = "99 3E 00 00 00 00 00 00 5C 43 00 00 28 42 00 00 B4 42 78 00 00 00 00 00 00 00 9A 99 19 3F 00 00 80 3E 00 00 00 00 04 00 00 00 00 00 80 3F 00 00 20 41 00 00 34 42 01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 9A 99 19 3F CD CC 8C 3F 00 00 80 3F 00 00 00 00 66 66 66 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 01 00 00";
+
+            var result = await mem.AoBScan(searchPattern);
+            if (result.Count() != 0 && result.Count() < 2)
+            {
+                foreach (var CurrentAddress in result)
+                {
+                    long patchAddress = CurrentAddress + 0L;
+
+                    mem.WriteMemory(patchAddress.ToString("X"), "bytes",
+                        "99 3E 00 00 00 00 00 00 5C 43 00 00 28 42 00 00 B4 42 78 00 00 00 00 00 00 00 9A 99 19 1B 00 00 80 10 00 00 00 00 04 00 00 00 00 00 80 3F 00 00 20 41 00 00 34 42 01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 9A 99 19 3F CD CC 8C 3F 00 00 80 3F 00 00 00 00 66 66 66 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 01 00 00");
+                }
+
+                stopwatch.Stop();
+                double elapsed = stopwatch.Elapsed.TotalSeconds;
+                PID.Text = $"M82B ꜰᴀꜱᴛ ꜱᴡɪᴛᴄʜ = ᴏɴ, ᴛɪᴍᴇ: {elapsed:F2} sec";
+            }
+            else if (result.Count() >= 2)
+            {
+                System.Windows.Forms.MessageBox.Show("THIS CODE IS PATCHED.", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            else
+            {
+                PID.Text = "ERROR - Pattern Not Found";
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Windows.Forms.MessageBox.Show("Error: " + ex.Message);
+        }
+    }
+}
+
