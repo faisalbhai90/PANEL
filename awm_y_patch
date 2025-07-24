@@ -21,7 +21,7 @@ public class AWM_Y_Patch
         PID.Text = "Applying...";
         Console.Beep(200, 300);
 
-        string search = "FF FF FF FF FF FF FF FF FF FF FF FF 01 00 00 00 68 00 00 00 94 01 00 00 02 00 00 00 03 00 00 00 CD CC 8C 3F CD CC 4C 3F CD CC 4C 3F 00 00 00 00 00 00 80 3F 00 00 80 3F ?? ?? ?? ?? 00 00 00 00 ?? ?? ?? ?? 20 ?? ?? ?? 00 00 00 00 FF FF FF FF 00 00 00 00 ?? ?? ?? ?? C8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 01 00 00 00 B4 C8 D6 3F 01 00 00 00 B4 C8 D6 3F 00 00 00 00 B4 C8 D6 3F 00 00 80 3F 00 00 80 3F 0A D7 A3 3D 00 00 00 00 00 00 5C 43 00 00 90 42 00 00 B4 42 96 00 00 00 00 00 00 00 00 00 00 3F 00 00 80 3E 00 00 00 00 04 00 00 00 00 00 80 3F 00 00 20 41 00 00 34 42 01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 8F C2 35 3F 9A 99 99 3F 00 00 80 3F 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 00 00 00 00 00 00 00 3F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F"; 
+        string search = "FF FF FF FF FF FF FF FF FF FF FF FF 01 00 00 00 68 00 00 00 94 01 00 00 02 00 00 00 03 00 00 00 CD CC 8C 3F CD CC 4C 3F CD CC 4C 3F 00 00 00 00 00 00 80 3F 00 00 80 3F ?? ?? ?? ?? 00 00 00 00 ?? ?? ?? ?? 20 ?? ?? ?? 00 00 00 00 FF FF FF FF 00 00 00 00 ?? ?? ?? ?? C8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 01 00 00 00 B4 C8 D6 3F 01 00 00 00 B4 C8 D6 3F 00 00 00 00 B4 C8 D6 3F 00 00 80 3F 00 00 80 3F 0A D7 A3 3D 00 00 00 00 00 00 5C 43 00 00 90 42 00 00 B4 42 96 00 00 00 00 00 00 00 00 00 00 3F 00 00 80 3E 00 00 00 00 04 00 00 00 00 00 80 3F 00 00 20 41 00 00 34 42 01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 8F C2 35 3F 9A 99 99 3F 00 00 80 3F 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 00 00 00 00 00 00 00 3F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F";
         string replace = "FF FF FF FF FF FF FF FF FF FF FF FF 01 00 00 00 68 00 00 00 94 01 00 00 02 00 00 00 03 00 00 00 CD CC 8C 3F CD CC 4C 3F CD CC 4C 3F 00 00 00 00 00 00 80 3F 00 00 80 3F ?? ?? ?? ?? 00 00 00 00 ?? ?? ?? ?? 20 ?? ?? ?? 00 00 00 00 FF FF FF FF 00 00 00 00 ?? ?? ?? ?? C8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 01 00 00 00 B4 C8 D6 3F 01 00 00 00 B4 C8 D6 3F 00 00 00 00 B4 C8 D6 3F 00 00 80 3F 00 00 80 3F 0A D7 A3 3D 00 00 00 00 00 00 5C 43 00 00 90 42 00 00 B4 42 96 00 00 00 00 00 00 00 EC 51 B8 3D 8F C2 F5 3C 00 00 00 00 04 00 00 00 00 00 80 3F 00 00 20 41 00 00 34 42 01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 8F C2 35 3F 9A 99 99 3F 00 00 80 3F 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F 00 00 00 00 00 00 00 00 00 00 00 3F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 3F 00 00 80 3F 00 00 80 3F";
 
         bool success = false;
@@ -47,24 +47,19 @@ public class AWM_Y_Patch
         stopwatch.Stop();
         double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
         Console.Beep(200, 300);
-        PID.Text = $"AWM Y Switch Done,ᴛɪᴍᴇ: {elapsedSeconds:F2} Seconds";
+        PID.Text = $"AWM Y Switch Done,ᴛꞮᴍᴇ: {elapsedSeconds:F2} Seconds";
     }
 
-    private static byte[] ReplaceWithOriginalIfNeeded(string[] replaceParts, byte[] originalMemory)
+    private static byte[] ReplaceWithOriginalIfNeeded(string[] replaceParts, byte[] original)
     {
-        byte[] patchBytes = new byte[replaceParts.Length];
+        List<byte> result = new List<byte>();
         for (int i = 0; i < replaceParts.Length; i++)
         {
             if (replaceParts[i] == "??")
-            {
-                patchBytes[i] = originalMemory[i];
-            }
+                result.Add(original[i]);
             else
-            {
-                patchBytes[i] = Convert.ToByte(replaceParts[i], 16);
-            }
+                result.Add(Convert.ToByte(replaceParts[i], 16));
         }
-        return patchBytes;
+        return result.ToArray();
     }
 }
-
