@@ -48,4 +48,3 @@ public class AWM_Patch
         }
     }
 }
-await AWM_Patch.Run(mem, PID);
